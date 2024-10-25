@@ -1,3 +1,9 @@
+<html lang="ja">
+    <head>
+        <title>search</title>
+    </head>
+    <body>
+        <?php 
 //初期設定
 $dbh = new PDO('mysql40.74.95.167; dbname=DB21241056','21241056','65014212');
 //AP全表示
@@ -14,3 +20,6 @@ for ($i = 0; $i < count(value: $v); $i++) {
     for ($i=0; $i <=$count; $i++) {
     print_r($sheets[$i]."<br>");
     }
+?>
+ </body>
+</html>
