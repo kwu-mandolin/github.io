@@ -1,5 +1,5 @@
 //初期設定
-$dbh = new PDO(dsn: 'mysql:host=localhost; dbname=DB21241056', username: '21241056', password: '65014212');
+$dbh = new PDO(dsn: 'mysql40.74.95.167; dbname=DB21241056', username: '21241056', password: '65014212');
 //AP全表示
 $sql = "SELECT title,composer,arranger FROM AP";
 $p = $dbh->query($sql);
