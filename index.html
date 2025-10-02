@@ -8,15 +8,6 @@
 </head>
 <body>
     <div id="output"></div>
-    <script>
-        const request = new XMLHttpRequest();
-        request.open('GET', 'https://script.googleusercontent.com/macros/echo?user_content_key=AehSKLjIVvM5hz2q-A23mJeGQsN6xWhk54_cK8UJvpzgHX0mXBB_Yp3c6U4Ao_BN6kjk6b5IMfO7WJP0WIUQC__1GMgrO9IMYE75XbP-K[...]');
-        request.responseType = 'json';
-        request.onload = function () {
-            let data = this.response;
-            document.getElementById('output').innerText = data['data'];
-        };
-        request.send();
-    </script>
+    <script src="main.js"></script>
 </body>
 </html>
