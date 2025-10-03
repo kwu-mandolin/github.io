@@ -3,6 +3,6 @@ request.open('GET', 'https://script.googleusercontent.com/macros/echo?user_conte
 request.responseType = 'json';
 request.onload = function () {
     let data = this.response;
-    document.getElementById('output').innerText = data['data'];
+    document.getElementById('output').innerText = data['date'];
 };
 request.send();
