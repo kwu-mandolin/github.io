@@ -6,9 +6,7 @@ request.onload = function () {
     let data = this.response;
     console.log(data);
 
-    // "date" の中身を文字列として取得（カンマ区切り）
-    let text = data['date'];
-    let items = text.split(","); // 配列に分割
+    let rows = data['date']; // すでに二次元配列
 
     let output = document.getElementById('output');
     output.innerHTML = "<table border='1' style='border-collapse: collapse; width: 100%; text-align: center;'></table>";
@@ -24,15 +22,15 @@ request.onload = function () {
         header.appendChild(th);
     });
 
-    // データ行（6個ごとに1行）
-    for (let i = 0; i < items.length; i += 6) {
+    // データ行
+    rows.forEach(rowData => {
         let row = table.insertRow();
-        for (let j = 0; j < 6; j++) {
+        rowData.forEach(cellData => {
             let cell = row.insertCell();
-            cell.innerText = items[i + j] || "";
+            cell.innerText = cellData;
             cell.style.padding = "5px";
-        }
-    }
+        });
+    });
 };
 
 request.onerror = function () {
