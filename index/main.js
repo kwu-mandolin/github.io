@@ -65,7 +65,7 @@ document.getElementById('add-btn').addEventListener('click', () => {
         body: JSON.stringify(newData)
     })
     .then(() => {
-        alert('データを追加しました！');
+        alert('データを追加しました！ページを更新してください！');
         loadData(); // 再読み込み
         document.querySelectorAll('#form input').forEach(i => i.value = '');
     })
