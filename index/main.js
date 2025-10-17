@@ -1,5 +1,5 @@
 // 🔹 GASのURLを設定
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbwBdqiMeABXDeYmOzB3rwBUCko2nwZMSlScPf0IlgoNnxUIzdV50LygPOofNbXpHTc/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbxB7YiNXDwEwXs5km3Xj7d1V7CW5nDkolAe9FKGWypKmcT8nYUXuMOEUvydvaO1Vao/exec';
 
 // 🔸 初期データ取得（一覧表示）
 function loadData() {
