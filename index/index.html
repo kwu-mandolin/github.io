@@ -23,5 +23,32 @@
     <div id="output"></div>
 
     <script src="main.js"></script>
+
+    //編集ポップアップ
+    <div id="edit-modal" style="
+        display:none;
+        position:fixed;
+        top:50%;
+        left:50%;
+        transform:translate(-50%, -50%);
+        background:white;
+        padding:20px;
+        box-shadow:0 0 10px rgba(0,0,0,0.3);
+        border-radius:10px;
+        z-index:1000;
+        ">
+        <h3>データを編集</h3>
+        <input type="hidden" id="edit-id">
+        <input type="text" id="edit-instrument" placeholder="楽器"><br><br>
+        <input type="text" id="edit-user" placeholder="使用者"><br><br>
+        <input type="text" id="edit-year" placeholder="購入年"><br><br>
+        <input type="text" id="edit-maker" placeholder="メーカー"><br><br>
+        <input type="text" id="edit-number" placeholder="備品番号"><br><br>
+        <input type="text" id="edit-memo" placeholder="メモ"><br><br>
+        
+        <button id="save-edit">保存</button>
+        <button id="cancel-edit">キャンセル</button>
+</div>
+
 </body>
 </html>
