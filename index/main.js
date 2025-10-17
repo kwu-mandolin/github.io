@@ -1,4 +1,4 @@
-// 🔹 GASのURLを設定（あなたのGASのデプロイURLに変更）
+// 🔹 GASのURLを設定
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbwBdqiMeABXDeYmOzB3rwBUCko2nwZMSlScPf0IlgoNnxUIzdV50LygPOofNbXpHTc/exec';
 
 // 🔸 初期データ取得（一覧表示）
@@ -17,7 +17,7 @@ function loadData() {
 
         // 🔹 ヘッダー行
         const header = table.insertRow();
-        ["選択", "楽器", "使用者", "購入年", "メーカー", "備品番号", "メモ"].forEach(h => {
+        ["選択", "楽器", "使用者", "購入年", "メーカー", "備品番号", "メモ", "操作"].forEach(h => {
             const th = document.createElement("th");
             th.innerText = h;
             th.style.backgroundColor = "#f0f0f0";
@@ -36,12 +36,23 @@ function loadData() {
             checkbox.dataset.index = index + 2; // シート上の行番号（2行目からデータが始まる）
             checkboxCell.appendChild(checkbox);
 
-            // 他のデータ列
+            // ✅ データ列
             rowData.forEach(cellData => {
                 const cell = row.insertCell();
                 cell.innerText = cellData;
                 cell.style.padding = "5px";
             });
+
+            // ✅ 編集ボタン列
+            const editCell = row.insertCell();
+            const editBtn = document.createElement("button");
+            editBtn.textContent = "編集";
+            editBtn.style.padding = "3px 8px";
+            editBtn.style.cursor = "pointer";
+            editBtn.addEventListener("click", () => {
+                openEditModal(rowData, index + 2); // 行番号を渡す
+            });
+            editCell.appendChild(editBtn);
         });
     };
 
@@ -63,7 +74,6 @@ document.getElementById('add-btn').addEventListener('click', () => {
         memo: document.getElementById('memo').value
     };
 
-    // フォーム未入力チェック
     if (!newData.instrument) {
         alert("楽器名を入力してください。");
         return;
@@ -71,19 +81,19 @@ document.getElementById('add-btn').addEventListener('click', () => {
 
     fetch(GAS_URL, {
         method: 'POST',
-        mode: 'no-cors', // GASはCORS制約があるため
+        mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newData)
     })
-    .then(() => {
-        alert('データを追加しました！');
-        loadData(); // 再読み込み
-        document.querySelectorAll('#form input').forEach(i => i.value = '');
-    })
-    .catch(err => {
-        console.error(err);
-        alert('追加に失敗しました。');
-    });
+        .then(() => {
+            alert('データを追加しました！');
+            loadData();
+            document.querySelectorAll('#form input').forEach(i => i.value = '');
+        })
+        .catch(err => {
+            console.error(err);
+            alert('追加に失敗しました。');
+        });
 });
 
 // 🗑️ 削除ボタン処理
@@ -99,22 +109,66 @@ document.getElementById('delete-btn').addEventListener('click', () => {
         return;
     }
 
-    // チェックされた行番号を取得
     const rowsToDelete = Array.from(checkboxes).map(cb => Number(cb.dataset.index));
 
-    // GAS側で削除できるように送信
     fetch(GAS_URL + "?delete=" + JSON.stringify(rowsToDelete), {
         method: 'GET',
         mode: 'no-cors'
     })
-    .then(() => {
-        alert("削除しました！");
-        loadData();
+        .then(() => {
+            alert("削除しました！");
+            loadData();
+        })
+        .catch(err => {
+            console.error(err);
+            alert("削除に失敗しました。");
+        });
+});
+
+// 🟦 編集モーダルを開く
+function openEditModal(rowData, rowIndex) {
+    document.getElementById("edit-id").value = rowIndex;
+    document.getElementById("edit-instrument").value = rowData[0];
+    document.getElementById("edit-user").value = rowData[1];
+    document.getElementById("edit-year").value = rowData[2];
+    document.getElementById("edit-maker").value = rowData[3];
+    document.getElementById("edit-number").value = rowData[4];
+    document.getElementById("edit-memo").value = rowData[5];
+
+    document.getElementById("edit-modal").style.display = "block";
+}
+
+// モーダルを閉じる
+document.getElementById("cancel-edit").addEventListener("click", function () {
+    document.getElementById("edit-modal").style.display = "none";
+});
+
+// 保存ボタン押下時
+document.getElementById("save-edit").addEventListener("click", function () {
+    const rowIndex = document.getElementById("edit-id").value;
+    const updatedData = {
+        instrument: document.getElementById("edit-instrument").value,
+        user: document.getElementById("edit-user").value,
+        year: document.getElementById("edit-year").value,
+        maker: document.getElementById("edit-maker").value,
+        number: document.getElementById("edit-number").value,
+        memo: document.getElementById("edit-memo").value
+    };
+
+    fetch(GAS_URL + "?row=" + rowIndex, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedData)
     })
-    .catch(err => {
-        console.error(err);
-        alert("削除に失敗しました。");
-    });
+        .then(() => {
+            alert("更新しました！");
+            document.getElementById("edit-modal").style.display = "none";
+            loadData();
+        })
+        .catch(err => {
+            console.error(err);
+            alert("更新に失敗しました。");
+        });
 });
 
 // 初期表示
