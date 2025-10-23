@@ -99,7 +99,7 @@ document.getElementById('add-btn').addEventListener('click', () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newData)
     }).then(() => {
-        alert('追加しました');
+        alert('追加しました！ページを更新してください！');
         // フォームクリア
         document.querySelectorAll('#form input').forEach(i => i.value = '');
         loadData();
@@ -121,7 +121,7 @@ document.getElementById('delete-btn').addEventListener('click', () => {
 
     fetch(url, { method: 'GET', mode: 'no-cors' })
         .then(() => {
-            alert('削除しました');
+            alert('削除しました。ページを更新してください。');
             loadData(document.getElementById('filter-select').value);
         })
         .catch(err => {
@@ -167,7 +167,7 @@ document.getElementById('save-edit').addEventListener('click', () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updated)
     }).then(() => {
-        alert('更新しました');
+        alert('更新しました！ページを更新してください！');
         document.getElementById('edit-modal').style.display = 'none';
         loadData(document.getElementById('filter-select').value);
     }).catch(err => {
