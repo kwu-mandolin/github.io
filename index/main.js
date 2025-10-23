@@ -1,5 +1,5 @@
 // 🔹 GASのURLを設定
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbxxJgL1Njm05KiSfA8KBAdNvEBhjebC4x24cfgZZyM57YezXsyCN8OWANct5NjDH6I/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbyCFoEnaUJSGSqNsqBH0FMniTbpoyM568FQDk5U5zJIlnCn4Wm3cWVqDqROE12pQGE/exec';
 
 // 🔸 初期データ取得（一覧表示）
 function loadData() {
@@ -145,9 +145,8 @@ document.getElementById("cancel-edit").addEventListener("click", function () {
 
 // 保存ボタン押下時
 document.getElementById("save-edit").addEventListener("click", function () {
-    const rowIndex = document.getElementById("edit-id").value;
     const updatedData = {
-        row: document.getElementById("edit-id").value,
+        row: document.getElementById("edit-id").value, // ← row番号を追加
         instrument: document.getElementById("edit-instrument").value,
         user: document.getElementById("edit-user").value,
         year: document.getElementById("edit-year").value,
@@ -157,7 +156,8 @@ document.getElementById("save-edit").addEventListener("click", function () {
     };
 
     fetch(GAS_URL, {
-        method: "POST",
+        method: "POST", // ← PUTではなくPOSTに変更
+        mode: "no-cors",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedData)
     })
@@ -171,6 +171,7 @@ document.getElementById("save-edit").addEventListener("click", function () {
             alert("更新に失敗しました。");
         });
 });
+
 
 // 初期表示
 loadData();
