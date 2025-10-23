@@ -147,6 +147,7 @@ document.getElementById("cancel-edit").addEventListener("click", function () {
 document.getElementById("save-edit").addEventListener("click", function () {
     const rowIndex = document.getElementById("edit-id").value;
     const updatedData = {
+        row: document.getElementById("edit-id").value,
         instrument: document.getElementById("edit-instrument").value,
         user: document.getElementById("edit-user").value,
         year: document.getElementById("edit-year").value,
