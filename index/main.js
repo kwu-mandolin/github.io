@@ -155,7 +155,7 @@ document.getElementById("save-edit").addEventListener("click", function () {
         memo: document.getElementById("edit-memo").value
     };
 
-    fetch(GAS_URL + "?row=" + rowIndex, {
+    fetch(GAS_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedData)
