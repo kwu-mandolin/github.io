@@ -1,5 +1,5 @@
 // 🔹 GASのURLを設定
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbyCFoEnaUJSGSqNsqBH0FMniTbpoyM568FQDk5U5zJIlnCn4Wm3cWVqDqROE12pQGE/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbwgbnSL0DbaAsRU4osDXGkZsZQ6Cw9o2KC3y54m2xgmf_oesoCSpNrmd41HC7ARJG8/exec';
 
 // =================================================
 // 一覧表示関数（instrument指定で絞り込み）
