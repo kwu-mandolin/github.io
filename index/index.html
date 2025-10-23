@@ -1,13 +1,23 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>楽器一覧</title>
+  <style>
+    body { font-family: sans-serif; padding:20px; background:#f7f7f7; }
+    input { margin-right:8px; padding:6px; }
+    button { padding:6px 10px; margin-right:8px; }
+    table { width:100%; border-collapse:collapse; background:#fff; margin-top:12px; }
+    th, td { border:1px solid #ccc; padding:8px; text-align:center; }
+    th { background:#eee; }
+    tr:nth-child(even){ background:#fafafa; }
+    #edit-modal { display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); background:white; padding:20px; box-shadow:0 6px 24px rgba(0,0,0,0.2); border-radius:8px; z-index:1000; width:320px; }
+  </style>
 </head>
 <body>
   <h2>新しいデータを追加</h2>
-  <div id="form" style="margin-bottom: 20px;">
+  <div id="form" style="margin-bottom: 10px;">
     <input type="text" id="instrument" placeholder="楽器">
     <input type="text" id="user" placeholder="使用者">
     <input type="text" id="year" placeholder="購入年">
@@ -19,47 +29,37 @@
 
   <h2>楽器一覧</h2>
 
-  <!-- 🔽 プルダウン（絞り込み） -->
+  <!-- フィルタ -->
   <label for="filter-select">楽器で絞り込み：</label>
   <select id="filter-select">
     <option value="">すべて</option>
     <option value="ギター">ギター</option>
     <option value="マンドリン">マンドリン</option>
     <option value="ベース">ベース</option>
-    <option value="マンドラ">マンドラ</option>
   </select>
   <button id="filter-btn">絞り込み</button>
-  <button id="clear-filter">取り消し</button>
+  <button id="clear-filter">解除</button>
 
   <br><br>
 
-  <button id="delete-btn" style="margin-bottom: 20px;">選択した行を削除</button>
+  <button id="delete-btn" style="margin-bottom: 10px;">選択した行を削除</button>
 
   <div id="output"></div>
 
   <!-- 編集ポップアップ -->
-  <div id="edit-modal" style="
-    display:none;
-    position:fixed;
-    top:50%;
-    left:50%;
-    transform:translate(-50%, -50%);
-    background:white;
-    padding:20px;
-    box-shadow:0 0 10px rgba(0,0,0,0.3);
-    border-radius:10px;
-    z-index:1000;">
+  <div id="edit-modal">
     <h3>データを編集</h3>
     <input type="hidden" id="edit-id">
-    <input type="text" id="edit-instrument" placeholder="楽器"><br><br>
-    <input type="text" id="edit-user" placeholder="使用者"><br><br>
-    <input type="text" id="edit-year" placeholder="購入年"><br><br>
-    <input type="text" id="edit-maker" placeholder="メーカー"><br><br>
-    <input type="text" id="edit-number" placeholder="備品番号"><br><br>
-    <input type="text" id="edit-memo" placeholder="メモ"><br><br>
-    
-    <button id="save-edit">保存</button>
-    <button id="cancel-edit">キャンセル</button>
+    <div><input type="text" id="edit-instrument" placeholder="楽器"></div><br>
+    <div><input type="text" id="edit-user" placeholder="使用者"></div><br>
+    <div><input type="text" id="edit-year" placeholder="購入年"></div><br>
+    <div><input type="text" id="edit-maker" placeholder="メーカー"></div><br>
+    <div><input type="text" id="edit-number" placeholder="備品番号"></div><br>
+    <div><input type="text" id="edit-memo" placeholder="メモ"></div><br>
+    <div style="text-align:right;">
+      <button id="save-edit">保存</button>
+      <button id="cancel-edit">キャンセル</button>
+    </div>
   </div>
 
   <script src="main.js"></script>
