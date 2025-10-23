@@ -1,5 +1,5 @@
 // 🔹 GASのURL（デプロイした /exec の URL を入れてください）
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbyCFoEnaUJSGSqNsqBH0FMniTbpoyM568FQDk5U5zJIlnCn4Wm3cWVqDqROE12pQGE/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbzMTD4G2_2320ILDTi-V9-riSt0xVvdOC18X9AiSoNWyIpCFICk-gx-ajtSyvb18_c/exec';
 
 // loadData: instrument を渡すと絞り込み（空文字で全件）
 function loadData(instrument = '') {
