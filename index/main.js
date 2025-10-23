@@ -156,7 +156,7 @@ document.getElementById("save-edit").addEventListener("click", function () {
     };
 
     fetch(GAS_URL + "?row=" + rowIndex, {
-        method: "PUT",
+        method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedData)
     })
