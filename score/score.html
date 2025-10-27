@@ -5,32 +5,35 @@
   <title>スコア一覧</title>
 </head>
 <body>
-  <h1>スコア一覧</h1>
+  <h1>楽譜一覧</h1>
 
-  <!-- テーブル -->
-  <table id="scoreTable" border="1" cellspacing="0" cellpadding="5">
+  <!-- ✅ テーブル全体を画面幅に合わせる -->
+  <table id="scoreTable" border="1" cellspacing="0" cellpadding="5"
+         style="width: 100%; table-layout: fixed; word-wrap: break-word; border-collapse: collapse;">
+
     <thead>
       <tr>
-        <th>番号</th>
-        <th>曲名</th>
-        <th>作曲者</th>
-        <th>編集者</th>
-        <th>総譜</th>
-        <th>1st</th>
-        <th>2nd</th>
-        <th>dola</th>
-        <th>cello</th>
-        <th>guitar</th>
-        <th>bass</th>
-        <th>other</th>
+        <th style="width:5%;">番号</th>
+        <th style="width:15%;">曲名</th>
+        <th style="width:10%;">作曲者</th>
+        <th style="width:10%;">編集者</th>
+        <th style="width:6%;">総譜</th>
+        <th style="width:6%;">1st</th>
+        <th style="width:6%;">2nd</th>
+        <th style="width:6%;">dola</th>
+        <th style="width:6%;">cello</th>
+        <th style="width:6%;">guitar</th>
+        <th style="width:6%;">bass</th>
+        <th style="width:8%;">other</th>
       </tr>
     </thead>
+
     <tbody id="scoreBody">
       <!-- JavaScriptでここに行を追加 -->
     </tbody>
   </table>
 
-  <!-- JSファイルを読み込み -->
+  <!-- JavaScriptファイルを読み込み -->
   <script src="score.js"></script>
 </body>
 </html>
