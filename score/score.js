@@ -25,7 +25,7 @@ function displayTable(scores) {
   scores.forEach(score => {
     const tr = document.createElement('tr');
 
-    const keys = ["番号", "曲名", "作曲者", "編集者", "総譜", "1st", "2nd", "dola", "cello", "guitar", "bass", "other"];
+    const keys = ["番号", "曲名", "作曲者", "編曲者", "総譜", "1st", "2nd", "dola", "cello", "guitar", "bass", "other"];
     keys.forEach(key => {
       const td = document.createElement('td');
       td.textContent = score[key] || '';
