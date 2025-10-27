@@ -1,6 +1,6 @@
   <script>
     // 🔹 ここに自分のGAS WebアプリURLを入れる
-    const GAS_URL = 'https://script.google.com/macros/s/XXXXXXXXXXXXXXXXXXXX/exec';
+    const GAS_URL = 'https://script.google.com/macros/s/AKfycbz9VWID9NwsVnisdQ-9aqVTsGQM81iY96HPU3NLFKZo1s2KTkjH5o67IKTTUdG6E8Xd/exec';
 
     // ページ読み込み時に実行
     window.onload = function() {
