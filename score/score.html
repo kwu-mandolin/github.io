@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>楽譜管理</title>
-  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1>楽譜一覧</h1>
@@ -12,8 +11,8 @@
   <button id="showFormBtn">＋ 追加</button>
 
   <!-- 追加フォーム -->
-  <div id="addForm" style="display: none;">
-    <table>
+  <div id="addForm" style="display:none; margin-top:10px;">
+    <table border="1" cellspacing="0" cellpadding="5">
       <tr>
         <th>曲名</th><th>作曲者</th><th>編曲者</th>
         <th>総譜</th><th>1st</th><th>2nd</th><th>Dola</th>
@@ -36,8 +35,10 @@
     <button id="addBtn" style="margin-top:10px;">登録</button>
   </div>
 
+  <br>
+
   <!-- 一覧表示用テーブル -->
-  <table id="scoreTable">
+  <table id="scoreTable" border="1" cellspacing="0" cellpadding="5">
     <thead>
       <tr>
         <th>番号</th>
