@@ -50,9 +50,10 @@ document.getElementById("addBtn").addEventListener("click", () => {
   };
 
   fetch(GAS_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data)
+    method: 'POST',    // doPost が「更新」も扱うようにしています
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(updated)
   })
     .then(response => response.text())
     .then(() => {
