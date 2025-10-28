@@ -15,15 +15,14 @@
   <div id="addForm" style="display: none;">
     <table>
       <tr>
-        <th>曲名</th><th>作曲者</th><th>編曲者</th><th>その他</th>
+        <th>曲名</th><th>作曲者</th><th>編曲者</th>
         <th>総譜</th><th>1st</th><th>2nd</th><th>Dola</th>
-        <th>Cello</th><th>Guitar</th><th>Bass</th>
+        <th>Cello</th><th>Guitar</th><th>Bass</th><th>その他</th>
       </tr>
       <tr>
         <td><input type="text" id="title"></td>
         <td><input type="text" id="composer"></td>
         <td><input type="text" id="arranger"></td>
-        <td><input type="text" id="other"></td>
         <td><select id="score"><option>〇</option><option>×</option></select></td>
         <td><select id="part1"><option>〇</option><option>×</option></select></td>
         <td><select id="part2"><option>〇</option><option>×</option></select></td>
@@ -31,6 +30,7 @@
         <td><select id="cello"><option>〇</option><option>×</option></select></td>
         <td><select id="guitar"><option>〇</option><option>×</option></select></td>
         <td><select id="bass"><option>〇</option><option>×</option></select></td>
+        <td><input type="text" id="other"></td>
       </tr>
     </table>
     <button id="addBtn" style="margin-top:10px;">登録</button>
@@ -57,6 +57,6 @@
     <tbody></tbody>
   </table>
 
-  <script src="script.js"></script>
+  <script src="score.js"></script>
 </body>
 </html>
