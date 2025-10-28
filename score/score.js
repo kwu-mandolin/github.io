@@ -1,38 +1,73 @@
-// 🔹 あなたのGAS WebアプリURLをここに入れる
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbz9VWID9NwsVnisdQ-9aqVTsGQM81iY96HPU3NLFKZo1s2KTkjH5o67IKTTUdG6E8Xd/exec';
+// === 設定 ===
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbyWZ0AbTzn2VoOFt-JXf3nt4fD-yHibYw5mUbqXMJHULZujeXKL5LTMpiwqQY9osQJm/exec';
 
-// ページ読み込み時にデータ取得
-window.onload = function() {
-  fetch(GAS_URL)
-    .then(response => response.json())
-    .then(data => {
-      if (data.status === 'success') {
-        displayTable(data.data);
-      } else {
-        console.error('データ取得失敗');
-      }
-    })
-    .catch(error => {
-      console.error('通信エラー:', error);
-    });
-};
+// === 初期処理 ===
+document.addEventListener('DOMContentLoaded', loadData);
 
-// 🔸 テーブルにデータを表示する関数
-function displayTable(scores) {
-  const tbody = document.getElementById('scoreBody');
-  tbody.innerHTML = ''; // 一旦クリア
+const showFormBtn = document.getElementById("showFormBtn");
+const addForm = document.getElementById("addForm");
+const addBtn = document.getElementById("addBtn");
 
-  scores.forEach(score => {
-    const tr = document.createElement('tr');
+// === フォーム開閉 ===
+showFormBtn.addEventListener("click", () => {
+  if (addForm.style.display === "none") {
+    addForm.style.display = "block";
+    showFormBtn.textContent = "－ 閉じる";
+  } else {
+    addForm.style.display = "none";
+    showFormBtn.textContent = "＋ 追加";
+  }
+});
 
-    const keys = ["番号", "曲名", "作曲者", "編曲者", "総譜", "1st", "2nd", "dola", "cello", "guitar", "bass", "other"];
-    keys.forEach(key => {
-      const td = document.createElement('td');
-      td.textContent = score[key] || '';
-      td.style.wordBreak = "break-word"; // セル内でも折り返し
-      tr.appendChild(td);
-    });
+// === 登録処理 ===
+addBtn.addEventListener("click", async () => {
+  const data = {
+    title: document.getElementById("title").value,
+    composer: document.getElementById("composer").value,
+    arranger: document.getElementById("arranger").value,
+    score: document.getElementById("score").value,
+    part1: document.getElementById("part1").value,
+    part2: document.getElementById("part2").value,
+    dola: document.getElementById("dola").value,
+    cello: document.getElementById("cello").value,
+    guitar: document.getElementById("guitar").value,
+    bass: document.getElementById("bass").value,
+    other: document.getElementById("other").value
+  };
 
+  await fetch(GAS_URL, {
+    method: "POST",
+    body: JSON.stringify(data)
+  });
+
+  alert("登録しました！");
+  loadData();
+});
+
+// === 一覧取得 ===
+async function loadData() {
+  const res = await fetch(GAS_URL);
+  const json = await res.json();
+
+  const tbody = document.querySelector("#scoreTable tbody");
+  tbody.innerHTML = "";
+
+  json.forEach(row => {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td>${row.番号}</td>
+      <td>${row.曲名}</td>
+      <td>${row.作曲者}</td>
+      <td>${row.編曲者}</td>
+      <td>${row.総譜}</td>
+      <td>${row["1st"]}</td>
+      <td>${row["2nd"]}</td>
+      <td>${row.dola}</td>
+      <td>${row.cello}</td>
+      <td>${row.guitar}</td>
+      <td>${row.bass}</td>
+      <td>${row.other}</td>
+    `;
     tbody.appendChild(tr);
   });
 }
