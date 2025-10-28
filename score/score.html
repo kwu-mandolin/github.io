@@ -2,38 +2,61 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>スコア一覧</title>
+  <title>楽譜管理</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1>楽譜一覧</h1>
 
-  <!-- ✅ テーブル全体を画面幅に合わせる -->
-  <table id="scoreTable" border="1" cellspacing="0" cellpadding="5"
-         style="width: 100%; table-layout: fixed; word-wrap: break-word; border-collapse: collapse;">
+  <!-- 追加ボタン -->
+  <button id="showFormBtn">＋ 追加</button>
 
+  <!-- 追加フォーム -->
+  <div id="addForm" style="display: none;">
+    <table>
+      <tr>
+        <th>曲名</th><th>作曲者</th><th>編曲者</th><th>その他</th>
+        <th>総譜</th><th>1st</th><th>2nd</th><th>Dola</th>
+        <th>Cello</th><th>Guitar</th><th>Bass</th>
+      </tr>
+      <tr>
+        <td><input type="text" id="title"></td>
+        <td><input type="text" id="composer"></td>
+        <td><input type="text" id="arranger"></td>
+        <td><input type="text" id="other"></td>
+        <td><select id="score"><option>〇</option><option>×</option></select></td>
+        <td><select id="part1"><option>〇</option><option>×</option></select></td>
+        <td><select id="part2"><option>〇</option><option>×</option></select></td>
+        <td><select id="dola"><option>〇</option><option>×</option></select></td>
+        <td><select id="cello"><option>〇</option><option>×</option></select></td>
+        <td><select id="guitar"><option>〇</option><option>×</option></select></td>
+        <td><select id="bass"><option>〇</option><option>×</option></select></td>
+      </tr>
+    </table>
+    <button id="addBtn" style="margin-top:10px;">登録</button>
+  </div>
+
+  <!-- 一覧表示用テーブル -->
+  <table id="scoreTable">
     <thead>
       <tr>
-        <th style="width:4%;">番号</th>
-        <th style="width:15%;">曲名</th>
-        <th style="width:10%;">作曲者</th>
-        <th style="width:10%;">編曲者</th>
-        <th style="width:3%;">総譜</th>
-        <th style="width:3%;">1st</th>
-        <th style="width:3%;">2nd</th>
-        <th style="width:3%;">dola</th>
-        <th style="width:3%;">cello</th>
-        <th style="width:3%;">guitar</th>
-        <th style="width:3%;">bass</th>
-        <th style="width:8%;">other</th>
+        <th>番号</th>
+        <th>曲名</th>
+        <th>作曲者</th>
+        <th>編曲者</th>
+        <th>総譜</th>
+        <th>1st</th>
+        <th>2nd</th>
+        <th>Dola</th>
+        <th>Cello</th>
+        <th>Guitar</th>
+        <th>Bass</th>
+        <th>Other</th>
       </tr>
     </thead>
-
-    <tbody id="scoreBody">
-      <!-- JavaScriptでここに行を追加 -->
-    </tbody>
+    <tbody></tbody>
   </table>
 
-  <!-- JavaScriptファイルを読み込み -->
-  <script src="score.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
