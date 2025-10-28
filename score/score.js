@@ -1,26 +1,40 @@
-// === 設定 ===
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbyWZ0AbTzn2VoOFt-JXf3nt4fD-yHibYw5mUbqXMJHULZujeXKL5LTMpiwqQY9osQJm/exec';
+// 🔹 GASのURLを設定
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbzRqfuE7UnLjFT1HRET_EWC0lqNPMlQUdG0Vtfx9Ow7txFZUOChU0rfe0Kb1QsoQtl-/exec';
 
-// === 初期処理 ===
-document.addEventListener('DOMContentLoaded', loadData);
+// 🔹 ページ読み込み時にデータを取得
+window.onload = function() {
+  loadData();
+};
 
-const showFormBtn = document.getElementById("showFormBtn");
-const addForm = document.getElementById("addForm");
-const addBtn = document.getElementById("addBtn");
+// 🔹 一覧データ取得
+function loadData() {
+  fetch(GAS_URL)
+    .then(response => response.json())
+    .then(data => {
+      const tbody = document.querySelector("#scoreTable tbody");
+      tbody.innerHTML = "";
 
-// === フォーム開閉 ===
-showFormBtn.addEventListener("click", () => {
-  if (addForm.style.display === "none") {
-    addForm.style.display = "block";
-    showFormBtn.textContent = "－ 閉じる";
-  } else {
-    addForm.style.display = "none";
-    showFormBtn.textContent = "＋ 追加";
-  }
+      data.forEach(row => {
+        const tr = document.createElement("tr");
+        Object.values(row).forEach(value => {
+          const td = document.createElement("td");
+          td.textContent = value;
+          tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+      });
+    })
+    .catch(err => console.error(err));
+}
+
+// 🔹 フォーム表示切替
+document.getElementById("showFormBtn").addEventListener("click", () => {
+  const form = document.getElementById("addForm");
+  form.style.display = form.style.display === "none" ? "block" : "none";
 });
 
-// === 登録処理 ===
-addBtn.addEventListener("click", async () => {
+// 🔹 新規追加処理
+document.getElementById("addBtn").addEventListener("click", () => {
   const data = {
     title: document.getElementById("title").value,
     composer: document.getElementById("composer").value,
@@ -35,39 +49,16 @@ addBtn.addEventListener("click", async () => {
     other: document.getElementById("other").value
   };
 
-  await fetch(GAS_URL, {
+  fetch(GAS_URL, {
     method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data)
-  });
-
-  alert("登録しました！");
-  loadData();
+  })
+    .then(response => response.text())
+    .then(() => {
+      alert("登録しました！");
+      loadData(); // 一覧更新
+      document.getElementById("addForm").style.display = "none";
+    })
+    .catch(err => console.error(err));
 });
-
-// === 一覧取得 ===
-async function loadData() {
-  const res = await fetch(GAS_URL);
-  const json = await res.json();
-
-  const tbody = document.querySelector("#scoreTable tbody");
-  tbody.innerHTML = "";
-
-  json.forEach(row => {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-      <td>${row.番号}</td>
-      <td>${row.曲名}</td>
-      <td>${row.作曲者}</td>
-      <td>${row.編曲者}</td>
-      <td>${row.総譜}</td>
-      <td>${row["1st"]}</td>
-      <td>${row["2nd"]}</td>
-      <td>${row.dola}</td>
-      <td>${row.cello}</td>
-      <td>${row.guitar}</td>
-      <td>${row.bass}</td>
-      <td>${row.other}</td>
-    `;
-    tbody.appendChild(tr);
-  });
-}
