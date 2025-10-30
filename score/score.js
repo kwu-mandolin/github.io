@@ -52,6 +52,7 @@ document.getElementById("addBtn").addEventListener("click", async () => {
   try {
     const res = await fetch(GAS_URL, {
       method: 'POST',
+      mode: 'no-cors',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     });
