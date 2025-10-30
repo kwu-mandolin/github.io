@@ -1,5 +1,5 @@
 // 🔹 GASのURLを設定
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbzRqfuE7UnLjFT1HRET_EWC0lqNPMlQUdG0Vtfx9Ow7txFZUOChU0rfe0Kb1QsoQtl-/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbz_zKnAB4pXP8gsKRc_ZrU0Jm2wg3BB-TI7hI5WxPrNCeG3vNf71pKT_gl4HjhqIrWi/exec';
 
 // ページ読み込み時にデータを取得
 window.onload = function() {
@@ -35,7 +35,6 @@ document.getElementById("showFormBtn").addEventListener("click", () => {
 
 // 新規追加処理
 document.getElementById("addBtn").addEventListener("click", async () => {
-  // 1) 送るデータを作る（変数名は `data`）
   const data = {
     title: document.getElementById("title").value,
     composer: document.getElementById("composer").value,
@@ -51,41 +50,31 @@ document.getElementById("addBtn").addEventListener("click", async () => {
   };
 
   try {
-    // 2) fetchでPOST（no-cors は使わない）
     const res = await fetch(GAS_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     });
 
-    // 3) レスポンスを確認（GAS側がJSONを返す前提）
-    const text = await res.text();
-    let json;
-    try {
-      json = JSON.parse(text);
-    } catch (e) {
-      // GASがプレーンテキスト返す場合もあるので fallback
-      json = { result: text };
-    }
+    const json = await res.json();
 
-    // 4) 成功チェック（GASで {result:"success"} を返すようにしているなら）
-    if (json.result === 'success' || res.ok) {
+    if (json.result === 'success') {
       alert('登録しました！');
-      // フォームを閉じ、入力をクリア
       document.getElementById("addForm").style.display = "none";
       clearFormInputs();
       loadData();
     } else {
       console.error('登録失敗:', json);
-      alert('登録に失敗しました。コンソールを確認してください。');
+      alert('登録に失敗しました。');
     }
 
   } catch (err) {
     console.error('fetch POST error:', err);
-    alert('ネットワークエラーが発生しました。コンソールを確認してください。');
+    alert('ネットワークエラーが発生しました。');
   }
 });
 
+// 入力フォームをクリア
 function clearFormInputs() {
   const ids = ["title","composer","arranger","score","part1","part2","dola","cello","guitar","bass","other"];
   ids.forEach(id => {
