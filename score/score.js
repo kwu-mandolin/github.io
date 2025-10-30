@@ -1,16 +1,16 @@
-// 🔹 GASのURLを設定
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbyJaQx-kYctJrvZ9Ht0JQqH9oU7J51oVMBSCsZmtAp_ddbvMIa36voPdHWrzPWZWe5E/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbzmJ1kLXMoDGjMcBzN83KWoGP0cM6f2bk-hVn-JKJ3ZP7swuU4c4D-7-Cn2baTI2IUQ/exec';
 
-// 🔹 ページ読み込み時にデータを取得
 window.onload = function() {
   loadData();
 };
 
-// 🔹 一覧データ取得
+// 一覧取得
 function loadData() {
   fetch(GAS_URL)
-    .then(response => response.json())
-    .then(data => {
+    .then(res => res.text())
+    .then(text => {
+      console.log("GETレスポンス:", text);
+      const data = JSON.parse(text);
       const tbody = document.querySelector("#scoreTable tbody");
       tbody.innerHTML = "";
 
@@ -27,13 +27,7 @@ function loadData() {
     .catch(err => console.error("fetch GET error:", err));
 }
 
-// 🔹 フォーム表示切替
-document.getElementById("showFormBtn").addEventListener("click", () => {
-  const form = document.getElementById("addForm");
-  form.style.display = form.style.display === "none" ? "block" : "none";
-});
-
-// 🔹 新規追加処理
+// 新規追加
 document.getElementById("addBtn").addEventListener("click", () => {
   const newData = {
     title: document.getElementById("title").value,
@@ -49,19 +43,23 @@ document.getElementById("addBtn").addEventListener("click", () => {
     other: document.getElementById("other").value
   };
 
+  console.log("送信データ:", newData);
+
   fetch(GAS_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(newData)
   })
-    .then(response => response.json()) // ← JSONとして受け取る
-    .then(result => {
+    .then(res => res.text())
+    .then(text => {
+      console.log("POSTレスポンス:", text);
+      const result = JSON.parse(text);
       if (result.result === "success") {
         alert("登録しました！");
-        loadData(); // 一覧更新
+        loadData();
         document.getElementById("addForm").style.display = "none";
       } else {
-        alert("登録に失敗しました: " + result.message);
+        alert("登録失敗: " + result.message);
       }
     })
     .catch(err => console.error("fetch POST error:", err));
