@@ -1,5 +1,5 @@
 // 🔹 GASのURLを設定
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbzHmjWOYL1X5viMz00BI4qVY7iIg1qWx1abOIPRgyCsMX_PtUDGlsAjoxYq8rhYuV5i/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbyJaQx-kYctJrvZ9Ht0JQqH9oU7J51oVMBSCsZmtAp_ddbvMIa36voPdHWrzPWZWe5E/exec';
 
 // 🔹 ページ読み込み時にデータを取得
 window.onload = function() {
