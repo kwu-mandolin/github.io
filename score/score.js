@@ -1,5 +1,6 @@
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbyPszwo8U-T0-ToHFbvibc-yVnjKt1es6l41nvxUXZ9HaSK9yIWEkvQZIzlCKJNObhM/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbx0Xh-zhWwvnt-sh13Tf6prXqEkZEPqoEMxGBxMHrro2rIq6iMblydd3Ip5xfqbSbor/exec';
 
+// ページ読み込み時
 window.onload = function() {
   loadData();
 };
@@ -27,7 +28,7 @@ function loadData() {
     .catch(err => console.error("fetch GET error:", err));
 }
 
-// 新規追加
+// 登録ボタンクリック時
 document.getElementById("addBtn").addEventListener("click", () => {
   const newData = {
     title: document.getElementById("title").value,
@@ -57,10 +58,22 @@ document.getElementById("addBtn").addEventListener("click", () => {
       if (result.result === "success") {
         alert("登録しました！");
         loadData();
+
+        // 入力欄をリセット
+        document.querySelectorAll("#addForm input").forEach(input => input.value = "");
+        document.querySelectorAll("#addForm select").forEach(select => select.value = "〇");
+
+        // フォームを隠す
         document.getElementById("addForm").style.display = "none";
       } else {
         alert("登録失敗: " + result.message);
       }
     })
     .catch(err => console.error("fetch POST error:", err));
+});
+
+// フォーム表示ボタン
+document.getElementById("showFormBtn").addEventListener("click", () => {
+  const form = document.getElementById("addForm");
+  form.style.display = (form.style.display === "none") ? "block" : "none";
 });
