@@ -1,32 +1,38 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <title>楽譜一覧</title>
-</head>
-<body>
-  <h1>楽譜一覧</h1>
+<h1>楽譜一覧</h1>
 
-  <table id="scoreTable" border="1" cellspacing="0" cellpadding="5">
-    <thead>
-      <tr>
-        <th>番号</th>
-        <th>曲名</th>
-        <th>作曲者</th>
-        <th>編曲者</th>
-        <th>総譜</th>
-        <th>1st</th>
-        <th>2nd</th>
-        <th>Dola</th>
-        <th>Cello</th>
-        <th>Guitar</th>
-        <th>Bass</th>
-        <th>その他</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
+<!-- 🔹 追加フォーム -->
+<div id="form" style="margin-bottom: 20px;">
+  <table border="1" cellspacing="0" cellpadding="5">
+    <tr>
+      <th>曲名</th>
+      <th>作曲者</th>
+      <th>編曲者</th>
+      <th>総譜</th>
+      <th>1st</th>
+      <th>2nd</th>
+      <th>Dola</th>
+      <th>Cello</th>
+      <th>Guitar</th>
+      <th>Bass</th>
+      <th>その他</th>
+    </tr>
+    <tr>
+      <td><input type="text" id="title"></td>
+      <td><input type="text" id="composer"></td>
+      <td><input type="text" id="arranger"></td>
+      <td><select id="score"><option>〇</option><option>×</option></select></td>
+      <td><select id="part1"><option>〇</option><option>×</option></select></td>
+      <td><select id="part2"><option>〇</option><option>×</option></select></td>
+      <td><select id="dola"><option>〇</option><option>×</option></select></td>
+      <td><select id="cello"><option>〇</option><option>×</option></select></td>
+      <td><select id="guitar"><option>〇</option><option>×</option></select></td>
+      <td><select id="bass"><option>〇</option><option>×</option></select></td>
+      <td><input type="text" id="other"></td>
+    </tr>
   </table>
 
-  <script src="score.js"></script>
-</body>
-</html>
+  <button id="add-btn" style="margin-top:10px;">追加</button>
+</div>
+
+<!-- 🔹 一覧表示 -->
+<div id="output"></div>
