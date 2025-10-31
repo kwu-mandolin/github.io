@@ -1,38 +1,143 @@
-<h1>楽譜一覧</h1>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>スコア管理ページ</title>
+  <style>
+    body {
+      font-family: "Meiryo", sans-serif;
+      margin: 20px;
+    }
 
-<!-- 🔹 追加フォーム -->
-<div id="form" style="margin-bottom: 20px;">
-  <table border="1" cellspacing="0" cellpadding="5">
-    <tr>
-      <th>曲名</th>
-      <th>作曲者</th>
-      <th>編曲者</th>
-      <th>総譜</th>
-      <th>1st</th>
-      <th>2nd</th>
-      <th>Dola</th>
-      <th>Cello</th>
-      <th>Guitar</th>
-      <th>Bass</th>
-      <th>その他</th>
-    </tr>
-    <tr>
-      <td><input type="text" id="title"></td>
-      <td><input type="text" id="composer"></td>
-      <td><input type="text" id="arranger"></td>
-      <td><select id="score"><option>〇</option><option>×</option></select></td>
-      <td><select id="part1"><option>〇</option><option>×</option></select></td>
-      <td><select id="part2"><option>〇</option><option>×</option></select></td>
-      <td><select id="dola"><option>〇</option><option>×</option></select></td>
-      <td><select id="cello"><option>〇</option><option>×</option></select></td>
-      <td><select id="guitar"><option>〇</option><option>×</option></select></td>
-      <td><select id="bass"><option>〇</option><option>×</option></select></td>
-      <td><input type="text" id="other"></td>
-    </tr>
+    h1 {
+      text-align: center;
+    }
+
+    form {
+      margin-bottom: 20px;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      background: #f9f9f9;
+    }
+
+    label {
+      display: inline-block;
+      width: 120px;
+      margin-bottom: 5px;
+    }
+
+    input, select {
+      width: 180px;
+      margin-bottom: 8px;
+      padding: 5px;
+    }
+
+    button {
+      padding: 8px 16px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 6px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>スコア管理</h1>
+
+  <form id="scoreForm">
+    <div>
+      <label>曲名：</label><input type="text" name="title" required><br>
+      <label>作曲者：</label><input type="text" name="composer"><br>
+      <label>編曲者：</label><input type="text" name="arranger"><br>
+      <label>総譜：</label>
+      <select name="score">
+        <option value="〇">〇</option>
+        <option value="×">×</option>
+      </select><br>
+      <label>1st：</label>
+      <select name="part1">
+        <option value="〇">〇</option>
+        <option value="×">×</option>
+      </select><br>
+      <label>2nd：</label>
+      <select name="part2">
+        <option value="〇">〇</option>
+        <option value="×">×</option>
+      </select><br>
+      <label>Dola：</label>
+      <select name="dola">
+        <option value="〇">〇</option>
+        <option value="×">×</option>
+      </select><br>
+      <label>Cello：</label>
+      <select name="cello">
+        <option value="〇">〇</option>
+        <option value="×">×</option>
+      </select><br>
+      <label>Guitar：</label>
+      <select name="guitar">
+        <option value="〇">〇</option>
+        <option value="×">×</option>
+      </select><br>
+      <label>Bass：</label>
+      <select name="bass">
+        <option value="〇">〇</option>
+        <option value="×">×</option>
+      </select><br>
+      <label>その他：</label><input type="text" name="others"><br><br>
+
+      <button type="submit">追加</button>
+    </div>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <th>曲名</th>
+        <th>作曲者</th>
+        <th>編曲者</th>
+        <th>総譜</th>
+        <th>1st</th>
+        <th>2nd</th>
+        <th>Dola</th>
+        <th>Cello</th>
+        <th>Guitar</th>
+        <th>Bass</th>
+        <th>その他</th>
+      </tr>
+    </thead>
+    <tbody id="scoreTableBody"></tbody>
   </table>
 
-  <button id="add-btn" style="margin-top:10px;">追加</button>
-</div>
-
-<!-- 🔹 一覧表示 -->
-<div id="output"></div>
+  <!-- 🔹 JavaScriptを連携 -->
+  <script src="score.js"></script>
+</body>
+</html>
