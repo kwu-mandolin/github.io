@@ -1,4 +1,4 @@
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbzmJ1kLXMoDGjMcBzN83KWoGP0cM6f2bk-hVn-JKJ3ZP7swuU4c4D-7-Cn2baTI2IUQ/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbyPszwo8U-T0-ToHFbvibc-yVnjKt1es6l41nvxUXZ9HaSK9yIWEkvQZIzlCKJNObhM/exec';
 
 window.onload = function() {
   loadData();
