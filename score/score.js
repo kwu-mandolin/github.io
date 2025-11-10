@@ -1,5 +1,5 @@
 // 🔹 あなたのGASデプロイURLをここに貼る
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbzf9nLgkVePlRdjw2WviZ3lkybnEKp2vVHvRszNFars6K8oIV0vcdsS6YkeTppEzzZU/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbwRy8Rsiyf7ncK6T2_mN4HAX-cOfjzmJchN1-2KRfRcLORbuE5LU9dfsfleBKhdvGRf/exec';
 
 // 🔹 データ読み込み
 async function loadData(filter = '') {
