@@ -5,134 +5,91 @@
   <title>スコア管理サイト</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <style>
-    /* 簡易スタイル（必要なら style.css に移してください） */
-    body { font-family: system-ui, "Hiragino Kaku Gothic ProN", "メイリオ", sans-serif; padding: 20px; }
+    body {
+      font-family: system-ui, "Hiragino Kaku Gothic ProN", "メイリオ", sans-serif;
+      padding: 20px;
+    }
     h1 { margin-bottom: 8px; }
-    form { margin-bottom: 20px; padding: 12px; border: 1px solid #ddd; border-radius: 6px; background:#f9f9f9; }
-    label { display:inline-block; width:80px; margin-right:8px; vertical-align: middle; }
-    input[type="text"], select { margin-bottom:8px; padding:4px 6px; width:200px; }
-    .row { margin-bottom:6px; }
-    table { border-collapse: collapse; width:100%; }
-    th, td { padding:6px 8px; border:1px solid #ccc; text-align:left; }
-    th { background:#eee; }
-    button { padding:6px 10px; margin-right:6px; }
+    form {
+      margin-bottom: 20px;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      background: #f9f9f9;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 10px 20px;
+      align-items: center;
+    }
+    label {
+      display: inline-block;
+      width: 70px;
+      font-weight: bold;
+    }
+    input[type="text"], select {
+      width: 150px;
+      padding: 4px 6px;
+    }
+    .form-group {
+      display: flex;
+      align-items: center;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      padding: 6px 8px;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+    th { background: #eee; }
+    button {
+      padding: 6px 10px;
+      margin: 3px;
+    }
+    .form-buttons {
+      grid-column: 1 / -1;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
   <h1>🎼 スコア管理サイト</h1>
 
-  <!-- フォーム（上に移動済み） -->
+  </div>
+
   <h2>新規追加／編集</h2>
   <form id="dataForm" onsubmit="return false;">
     <input type="hidden" id="row">
 
-    <div class="row">
-      <label for="number">番号</label>
-      <input type="text" id="number">
-    </div>
+    <div class="form-group"><label>番号</label><input type="text" id="number"></div>
+    <div class="form-group"><label>曲名</label><input type="text" id="title"></div>
+    <div class="form-group"><label>作曲家</label><input type="text" id="composer"></div>
+    <div class="form-group"><label>編集者</label><input type="text" id="editor"></div>
+    <div class="form-group"><label>総譜</label><select id="score"><option></option><option>〇</option><option>×</option></select></div>
+    <div class="form-group"><label>1st</label><select id="part1"><option></option><option>〇</option><option>×</option></select></div>
+    <div class="form-group"><label>2nd</label><select id="part2"><option></option><option>〇</option><option>×</option></select></div>
+    <div class="form-group"><label>Dola</label><select id="dola"><option></option><option>〇</option><option>×</option></select></div>
+    <div class="form-group"><label>Cello</label><select id="cello"><option></option><option>〇</option><option>×</option></select></div>
+    <div class="form-group"><label>Guitar</label><select id="guitar"><option></option><option>〇</option><option>×</option></select></div>
+    <div class="form-group"><label>Bass</label><select id="bass"><option></option><option>〇</option><option>×</option></select></div>
+    <div class="form-group"><label>Other</label><input type="text" id="other"></div>
 
-    <div class="row">
-      <label for="title">曲名</label>
-      <input type="text" id="title">
-    </div>
-
-    <div class="row">
-      <label for="composer">作曲家</label>
-      <input type="text" id="composer">
-    </div>
-
-    <div class="row">
-      <label for="editor">編集者</label>
-      <input type="text" id="editor">
-    </div>
-
-    <!-- ここからプルダウン（〇/×/空） -->
-    <div class="row">
-      <label for="score">総譜</label>
-      <select id="score">
-        <option value=""></option>
-        <option value="〇">〇</option>
-        <option value="×">×</option>
-      </select>
-    </div>
-
-    <div class="row">
-      <label for="part1">1st</label>
-      <select id="part1">
-        <option value=""></option>
-        <option value="〇">〇</option>
-        <option value="×">×</option>
-      </select>
-    </div>
-
-    <div class="row">
-      <label for="part2">2nd</label>
-      <select id="part2">
-        <option value=""></option>
-        <option value="〇">〇</option>
-        <option value="×">×</option>
-      </select>
-    </div>
-
-    <div class="row">
-      <label for="dola">Dola</label>
-      <select id="dola">
-        <option value=""></option>
-        <option value="〇">〇</option>
-        <option value="×">×</option>
-      </select>
-    </div>
-
-    <div class="row">
-      <label for="cello">Cello</label>
-      <select id="cello">
-        <option value=""></option>
-        <option value="〇">〇</option>
-        <option value="×">×</option>
-      </select>
-    </div>
-
-    <div class="row">
-      <label for="guitar">Guitar</label>
-      <select id="guitar">
-        <option value=""></option>
-        <option value="〇">〇</option>
-        <option value="×">×</option>
-      </select>
-    </div>
-
-    <div class="row">
-      <label for="bass">Bass</label>
-      <select id="bass">
-        <option value=""></option>
-        <option value="〇">〇</option>
-        <option value="×">×</option>
-      </select>
-    </div>
-
-    <div class="row">
-      <label for="other">Other</label>
-      <input type="text" id="other">
-    </div>
-
-    <div style="margin-top:8px;">
+    <div class="form-buttons">
       <button type="button" onclick="saveData()">追加／更新</button>
       <button type="button" onclick="resetForm()">フォームをクリア</button>
     </div>
   </form>
 
-  <!-- フィルター / 操作 -->
   <div style="margin-bottom:12px;">
     <button onclick="loadData()">全件表示</button>
     <button onclick="loadData('削除')">削除のみ</button>
     <button onclick="loadData('その他')">削除以外</button>
-  </div>
 
-  <!-- テーブル（フォームの下） -->
-  <table id="scoreTable" aria-describedby="scoreTableDesc">
+  <table id="scoreTable">
     <thead>
       <tr>
-        <th>行番号</th>
         <th>番号</th>
         <th>曲名</th>
         <th>作曲家</th>
