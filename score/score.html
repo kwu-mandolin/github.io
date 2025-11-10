@@ -21,13 +21,6 @@
 <body>
   <h1>🎼 スコア管理サイト</h1>
 
-  <!-- フィルター / 操作 -->
-  <div style="margin-bottom:12px;">
-    <button onclick="loadData()">全件表示</button>
-    <button onclick="loadData('削除')">削除のみ</button>
-    <button onclick="loadData('その他')">削除以外</button>
-  </div>
-
   <!-- フォーム（上に移動済み） -->
   <h2>新規追加／編集</h2>
   <form id="dataForm" onsubmit="return false;">
@@ -127,6 +120,13 @@
       <button type="button" onclick="resetForm()">フォームをクリア</button>
     </div>
   </form>
+
+  <!-- フィルター / 操作 -->
+  <div style="margin-bottom:12px;">
+    <button onclick="loadData()">全件表示</button>
+    <button onclick="loadData('削除')">削除のみ</button>
+    <button onclick="loadData('その他')">削除以外</button>
+  </div>
 
   <!-- テーブル（フォームの下） -->
   <table id="scoreTable" aria-describedby="scoreTableDesc">
