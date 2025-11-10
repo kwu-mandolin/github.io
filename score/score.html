@@ -3,45 +3,154 @@
 <head>
   <meta charset="UTF-8">
   <title>スコア管理サイト</title>
+  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <style>
+    /* 簡易スタイル（必要なら style.css に移してください） */
+    body { font-family: system-ui, "Hiragino Kaku Gothic ProN", "メイリオ", sans-serif; padding: 20px; }
+    h1 { margin-bottom: 8px; }
+    form { margin-bottom: 20px; padding: 12px; border: 1px solid #ddd; border-radius: 6px; background:#f9f9f9; }
+    label { display:inline-block; width:80px; margin-right:8px; vertical-align: middle; }
+    input[type="text"], select { margin-bottom:8px; padding:4px 6px; width:200px; }
+    .row { margin-bottom:6px; }
+    table { border-collapse: collapse; width:100%; }
+    th, td { padding:6px 8px; border:1px solid #ccc; text-align:left; }
+    th { background:#eee; }
+    button { padding:6px 10px; margin-right:6px; }
+  </style>
 </head>
 <body>
   <h1>🎼 スコア管理サイト</h1>
 
-  <div>
+  <!-- フィルター / 操作 -->
+  <div style="margin-bottom:12px;">
     <button onclick="loadData()">全件表示</button>
-    <button onclick="loadData('削除')">削除のみを表示</button>
-    <button onclick="loadData('その他')">削除を非表示</button>
+    <button onclick="loadData('削除')">削除のみ</button>
+    <button onclick="loadData('その他')">削除以外</button>
   </div>
 
-  <table border="1" id="scoreTable">
+  <!-- フォーム（上に移動済み） -->
+  <h2>新規追加／編集</h2>
+  <form id="dataForm" onsubmit="return false;">
+    <input type="hidden" id="row">
+
+    <div class="row">
+      <label for="number">番号</label>
+      <input type="text" id="number">
+    </div>
+
+    <div class="row">
+      <label for="title">曲名</label>
+      <input type="text" id="title">
+    </div>
+
+    <div class="row">
+      <label for="composer">作曲家</label>
+      <input type="text" id="composer">
+    </div>
+
+    <div class="row">
+      <label for="editor">編集者</label>
+      <input type="text" id="editor">
+    </div>
+
+    <!-- ここからプルダウン（〇/×/空） -->
+    <div class="row">
+      <label for="score">総譜</label>
+      <select id="score">
+        <option value=""></option>
+        <option value="〇">〇</option>
+        <option value="×">×</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <label for="part1">1st</label>
+      <select id="part1">
+        <option value=""></option>
+        <option value="〇">〇</option>
+        <option value="×">×</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <label for="part2">2nd</label>
+      <select id="part2">
+        <option value=""></option>
+        <option value="〇">〇</option>
+        <option value="×">×</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <label for="dola">Dola</label>
+      <select id="dola">
+        <option value=""></option>
+        <option value="〇">〇</option>
+        <option value="×">×</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <label for="cello">Cello</label>
+      <select id="cello">
+        <option value=""></option>
+        <option value="〇">〇</option>
+        <option value="×">×</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <label for="guitar">Guitar</label>
+      <select id="guitar">
+        <option value=""></option>
+        <option value="〇">〇</option>
+        <option value="×">×</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <label for="bass">Bass</label>
+      <select id="bass">
+        <option value=""></option>
+        <option value="〇">〇</option>
+        <option value="×">×</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <label for="other">Other</label>
+      <input type="text" id="other">
+    </div>
+
+    <div style="margin-top:8px;">
+      <button type="button" onclick="saveData()">追加／更新</button>
+      <button type="button" onclick="resetForm()">フォームをクリア</button>
+    </div>
+  </form>
+
+  <!-- テーブル（フォームの下） -->
+  <table id="scoreTable" aria-describedby="scoreTableDesc">
     <thead>
       <tr>
-        <th>番号</th><th>曲名</th><th>作曲家</th><th>編集者</th>
-        <th>総譜</th><th>1st</th><th>2nd</th><th>Dola</th>
-        <th>Cello</th><th>Guitar</th><th>Bass</th><th>Other</th>
+        <th>行番号</th>
+        <th>番号</th>
+        <th>曲名</th>
+        <th>作曲家</th>
+        <th>編集者</th>
+        <th>総譜</th>
+        <th>1st</th>
+        <th>2nd</th>
+        <th>Dola</th>
+        <th>Cello</th>
+        <th>Guitar</th>
+        <th>Bass</th>
+        <th>Other</th>
         <th>操作</th>
       </tr>
     </thead>
     <tbody></tbody>
   </table>
-
-  <h2>新規追加／編集</h2>
-  <form id="dataForm">
-    <input type="hidden" id="row">
-    番号: <input type="text" id="number"><br>
-    曲名: <input type="text" id="title"><br>
-    作曲家: <input type="text" id="composer"><br>
-    編集者: <input type="text" id="editor"><br>
-    総譜: <input type="text" id="score"><br>
-    1st: <input type="text" id="part1"><br>
-    2nd: <input type="text" id="part2"><br>
-    Dola: <input type="text" id="dola"><br>
-    Cello: <input type="text" id="cello"><br>
-    Guitar: <input type="text" id="guitar"><br>
-    Bass: <input type="text" id="bass"><br>
-    Other: <input type="text" id="other"><br>
-    <button type="button" onclick="saveData()">追加／更新</button>
-  </form>
 
   <script src="score.js"></script>
 </body>
