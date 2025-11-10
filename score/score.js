@@ -1,7 +1,6 @@
-// 🔹 あなたのGASデプロイURLをここに貼る
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbzDrB34jR7jHV6-rC0ZWEJ1WYDfHtfTibxo_nIPsqoFuS2t6fKoTY-PSQ-x0qioretL/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbxNFzKh3SCwdAKLmfIOprlHkbZKfSop2cmyspeVBODI1SMbEO29F-8fjAuVTVukOe4/exec';
 
-// loadData: データ読み込み（filter: '' | '消除' | 'その他'）
+// データ取得
 async function loadData(filter = '') {
   try {
     const url = filter ? `${GAS_URL}?filter=${encodeURIComponent(filter)}` : GAS_URL;
@@ -13,32 +12,24 @@ async function loadData(filter = '') {
     tbody.innerHTML = '';
 
     json.date.forEach(row => {
+      const rowNum = row[0]; // シートの行番号
+      const values = row.slice(1); // 実データ
+
       const tr = document.createElement('tr');
-      const rowNum = row[0]; // シートの実際の行番号
-      const values = row.slice(1); // データ部分（0:番号,1:曲名,...）
-
-      // 行番号セル（目視用）
-      const th = document.createElement('th');
-      th.textContent = rowNum;
-      tr.appendChild(th);
-
-      // データセルを追加
       values.forEach(val => {
         const td = document.createElement('td');
         td.textContent = val;
         tr.appendChild(td);
       });
 
-      // 操作セル（編集・削除）
       const tdOps = document.createElement('td');
-
       const editBtn = document.createElement('button');
       editBtn.textContent = '編集';
-      editBtn.addEventListener('click', () => editRow(rowNum, values));
+      editBtn.onclick = () => editRow(rowNum, values);
 
       const delBtn = document.createElement('button');
       delBtn.textContent = '削除';
-      delBtn.addEventListener('click', () => deleteRow(rowNum));
+      delBtn.onclick = () => deleteRow(rowNum);
 
       tdOps.appendChild(editBtn);
       tdOps.appendChild(delBtn);
@@ -52,28 +43,20 @@ async function loadData(filter = '') {
   }
 }
 
-// editRow: 編集ボタン押下時にフォームへデータを流す
+// 編集
 function editRow(row, values) {
   document.getElementById('row').value = row;
-
-  const ids = [
-    'number','title','composer','editor','score','part1',
-    'part2','dola','cello','guitar','bass','other'
-  ];
-
+  const ids = ['number','title','composer','editor','score','part1','part2','dola','cello','guitar','bass','other'];
   ids.forEach((id, i) => {
     const el = document.getElementById(id);
-    if (!el) return;
-    el.value = values[i] !== undefined && values[i] !== null ? values[i] : '';
+    if (el) el.value = values[i] || '';
   });
-
-  // スクロールしてフォームを見せる（任意）
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// deleteRow: 削除（行番号を配列で送る）
+// 削除
 async function deleteRow(row) {
-  if (!confirm(`行 ${row} を削除しますか？`)) return;
+  if (!confirm(`このデータを削除しますか？`)) return;
   try {
     const url = `${GAS_URL}?delete=${encodeURIComponent(JSON.stringify([row]))}`;
     const res = await fetch(url);
@@ -82,13 +65,11 @@ async function deleteRow(row) {
     loadData();
   } catch (err) {
     alert('削除エラー: ' + err.message);
-    console.error(err);
   }
 }
 
-// saveData: 追加／更新
+// 保存
 async function saveData() {
-  // 必要なフィールドを収集
   const data = {
     row: document.getElementById('row').value || '',
     number: document.getElementById('number').value || '',
@@ -115,14 +96,12 @@ async function saveData() {
       method: 'POST',
       body: JSON.stringify(data)
     });
-    const text = await res.text();
-    alert(text);
-
+    const txt = await res.text();
+    alert(txt);
     resetForm();
     loadData();
   } catch (err) {
     alert('保存エラー: ' + err.message);
-    console.error(err);
   }
 }
 
@@ -131,5 +110,4 @@ function resetForm() {
   document.getElementById('row').value = '';
 }
 
-// ページ読み込み時に全件取得
 window.onload = () => loadData();
