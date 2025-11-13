@@ -1,45 +1,65 @@
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbxNFzKh3SCwdAKLmfIOprlHkbZKfSop2cmyspeVBODI1SMbEO29F-8fjAuVTVukOe4/exec';
 
+let allData = []; // ← 全データを保持しておく
+
 // データ取得
-async function loadData(filter = '') {
+async function loadData() {
   try {
-    const url = filter ? `${GAS_URL}?filter=${encodeURIComponent(filter)}` : GAS_URL;
-    const res = await fetch(url);
+    const res = await fetch(GAS_URL);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const json = await res.json();
 
-    const tbody = document.querySelector('#scoreTable tbody');
-    tbody.innerHTML = '';
-
-    json.date.forEach(row => {
-      const rowNum = row[0]; // シートの行番号
-      const values = row.slice(1); // 実データ
-
-      const tr = document.createElement('tr');
-      values.forEach(val => {
-        const td = document.createElement('td');
-        td.textContent = val;
-        tr.appendChild(td);
-      });
-
-      const tdOps = document.createElement('td');
-      const editBtn = document.createElement('button');
-      editBtn.textContent = '編集';
-      editBtn.onclick = () => editRow(rowNum, values);
-
-      const delBtn = document.createElement('button');
-      delBtn.textContent = '削除';
-      delBtn.onclick = () => deleteRow(rowNum);
-
-      tdOps.appendChild(editBtn);
-      tdOps.appendChild(delBtn);
-      tr.appendChild(tdOps);
-
-      tbody.appendChild(tr);
-    });
+    allData = json.date; // ← 一度保存しておく
+    displayTable(allData); // ← 表示を分離
   } catch (err) {
     alert('データ取得エラー: ' + err.message);
     console.error(err);
+  }
+}
+
+// テーブル表示関数（検索結果にも使う）
+function displayTable(dataArray) {
+  const tbody = document.querySelector('#scoreTable tbody');
+  tbody.innerHTML = '';
+
+  dataArray.forEach(row => {
+    const rowNum = row[0]; // シートの行番号
+    const values = row.slice(1); // 実データ
+
+    const tr = document.createElement('tr');
+    values.forEach(val => {
+      const td = document.createElement('td');
+      td.textContent = val;
+      tr.appendChild(td);
+    });
+
+    const tdOps = document.createElement('td');
+    const editBtn = document.createElement('button');
+    editBtn.textContent = '編集';
+    editBtn.onclick = () => editRow(rowNum, values);
+
+    const delBtn = document.createElement('button');
+    delBtn.textContent = '削除';
+    delBtn.onclick = () => deleteRow(rowNum);
+
+    tdOps.appendChild(editBtn);
+    tdOps.appendChild(delBtn);
+    tr.appendChild(tdOps);
+
+    tbody.appendChild(tr);
+  });
+}
+
+// 検索機能
+function searchTitle() {
+  const keyword = document.getElementById('searchInput').value.trim();
+  if (keyword === '') {
+    displayTable(allData); // 空なら全件
+  } else {
+    const filtered = allData.filter(row =>
+      row[2] && row[2].toLowerCase().includes(keyword.toLowerCase()) // 曲名は3列目(row[2])
+    );
+    displayTable(filtered);
   }
 }
 
